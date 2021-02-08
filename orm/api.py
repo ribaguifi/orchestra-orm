@@ -167,7 +167,7 @@ class Api(Resource):
         expected = [status.HTTP_200_OK, status.HTTP_304_NOT_MODIFIED]
         self.validate_response(response, expected)
         # Make sure self.url is the base and not something else
-        for relation,content in response.links.iteritems():
+        for relation,content in response.links.items():
             if rel.get_name(relation) == 'base':
                 if content['url'] != response.url:
                     self.url = content['url']
