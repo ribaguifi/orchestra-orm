@@ -1,4 +1,4 @@
-import cPickle
+import pickle as cPickle
 
 
 class CacheDict(dict):
@@ -23,7 +23,7 @@ class CacheDict(dict):
         value.accesses = 0
     
     def invalidate(self, url=None):
-        for key, response in self.iteritems():
+        for key, response in self.items():
             if not url or (url and key[0] == url):
                 response.is_valid = False
     
