@@ -23,7 +23,7 @@ def filter_collection(collection, **kwargs):
     exclude = kwargs.pop('_exclude', False)
     result = []
     for resource in collection.resources:
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             include = False
             attrs = key.split('__')
             try:

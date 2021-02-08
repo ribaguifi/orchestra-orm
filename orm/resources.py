@@ -42,7 +42,7 @@ class Resource(object):
             self.process_links()
         self._has_retrieved = bool(self._headers and 'link' in self._headers)
         # Build nested Resource structure
-        for name, value in kwargs.iteritems():
+        for name, value in kwargs.items():
             if not name.startswith('_'):
 #                if name != 'url' and isurl(value):
 #                    value = Resource(*args, url=value)
@@ -82,7 +82,7 @@ class Resource(object):
     def _set_file_handlers(self):
         """ adds a file handler for related resource files """
         data = self._data
-        for name, value in data.iteritems():
+        for name, value in data.items():
             if name.endswith('_url'):
                 field_name = name.replace('_url', '')
                 sha256_field_name = '%s_sha256' % field_name
@@ -101,7 +101,7 @@ class Resource(object):
     def _data(self):
         """ hides internal methods and attributes """
         data = {}
-        for name, value in self.__dict__.iteritems():
+        for name, value in self.__dict__.items():
             if not name.startswith('_') and name not in self._serialize_ignores:
                 if name == 'url' and value is None:
                     continue
@@ -122,7 +122,7 @@ class Resource(object):
     def process_links(self):
         """ get extra managers from link relations """
         links = self.get_links()
-        for relation, link in links.iteritems():
+        for relation, link in links.items():
             name = rel.get_name(relation)
             if name not in self.__dict__:
                 setattr(self, name, Manager(link, relation, self.api))
@@ -157,7 +157,7 @@ class Resource(object):
     
     def merge(self, resource):
         """  merges input resource attributes to current resource """
-        for key, value in resource._data.iteritems():
+        for key, value in resource._data.items():
             setattr(self, key, value)
         self._set_file_handlers()
         self._headers.update(resource._headers)
@@ -209,11 +209,11 @@ class Resource(object):
         if isnested and 'url' in raw_data:
             # Remove further nested objects to avoid circular relations
             return {
-                k: v for k,v in raw_data.iteritems() if not isinstance(v, RelatedCollection)
+                k: v for k,v in raw_data.items() if not isinstance(v, RelatedCollection)
             }
 #            return raw_data['url']
         data = {}
-        for key, value in raw_data.iteritems():
+        for key, value in raw_data.items():
             if type(value) in (Resource, RelatedCollection, Collection):
                 value = value.serialize(isnested=True)
             data[key] = value
