@@ -192,7 +192,8 @@ class Api(Resource):
                 url += '%d/' % pk
             # Server side-filtering
             filtering = []
-            for key in kwargs.keys():
+            keys = list(kwargs.keys())
+            for key in keys:
                 if key not in ['extra_headers']:
                     value = kwargs.pop(key)
                     filtering.append('%s=%s' % (key,value))
@@ -236,7 +237,7 @@ class Api(Resource):
                 content = self.serialize_response(response.content)
             except ValueError:
                 # Internal server error with a bunch of html most probably
-                content = {'detail': response.content[:200] + '[...]'}
+                content = {'detail': str(response.content[:200]) + '[...]'}
             context = {
                 'method': response.request.method,
                 'url': response.request.url,

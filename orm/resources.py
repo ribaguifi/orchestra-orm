@@ -111,7 +111,7 @@ class Resource(object):
     def get_links(self):
         """ gets link header urls mapped by relation """
         links = {}
-        link_header = self._headers.get('link', False)
+        link_header = self._headers.get('Link', False)
         if link_header:
             for line in link_header.split(','):
                 link = re.findall(r'<(.*)>', line)[0]
